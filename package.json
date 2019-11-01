@@ -1,0 +1,22 @@
+{
+  "name": "dc-uiex-hello-world",
+  "version": "0.0.1",
+  "description": "A starter project",
+  "main": "index.html",
+  "scripts": {
+    "build": "$(npm bin)/parcel build --public-url '.' ./src/index.html",
+    "start": "./start.sh"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "parcel-bundler": "^1.12.4",
+    "sass": "^1.23.0",
+    "typescript": "^3.6.4"
+  },
+  "dependencies": {
+    "@types/node": "^12.11.1",
+    "dc-extensions-sdk": "git+ssh://git@bitbucket.org/amplience/dc-extensions-sdk.git#43ff0b181f01f71189449f5356235bbc81bc1f24",
+    "svg.js": "^2.7.1"
+  }
+}
