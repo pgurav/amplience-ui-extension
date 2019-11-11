@@ -1,5 +1,6 @@
 # Dependencies
 * Node [https://nodejs.org/en/download/](https://nodejs.org/en/download/)
+* Git [https://git-scm.com/download/mac](https://git-scm.com/download/mac)
 * Production account [http://content.amplience.net/](http://content.amplience.net/)
 
 # Running Extension
