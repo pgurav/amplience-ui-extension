@@ -106,3 +106,35 @@ To configure your default value for a content type schema field, use the keyword
     }
 }
 ```
+### Content Type Schema Using an Image
+```
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "{{your-schema-id-here}}",
+
+    "title": "Default Enum Value",
+    "description": "Description",
+
+    "allOf": [
+        {
+            "$ref": "http://bigcontent.io/cms/schema/v1/core#/definitions/content"
+        }
+    ],
+
+    "type": "object",
+    "properties": {
+        "defaultImage": {
+            "title": "Default Image Extension",
+            "type": "string",
+            "ui:extension": {
+                "url": "https://127.0.0.1:1234/",
+                "height": 100,
+                "params": {
+                    "type": "image",
+                    "default": "https://i1.adis.ws/i/hackathon/cat",
+                }
+            }
+        },
+    }
+}
+```
