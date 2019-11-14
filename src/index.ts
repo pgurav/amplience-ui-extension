@@ -95,7 +95,7 @@ import {
           img.onload = () => {sdk.frame.setHeight()};
           img.src= '//' + sdk.stagingEnvironment + '/i/' + i.endpoint + '/' + i.name +'?w=400';
           removeImageField.classList.remove("hidden");
-          setContent(img.src);
+          setContent('//' + sdk.stagingEnvironment + '/i/' + i.endpoint + '/' + i.name);
        });
 
        removeImageField.on('click',async (e) => {
