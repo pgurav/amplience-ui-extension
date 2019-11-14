@@ -61,10 +61,10 @@ To configure your default value for a content type schema field, use the keyword
     				"default": "This is a default value",
     					
     
-               }
-			}
-		}
-	}
+                }
+            }
+        },
+    }
 }
 ```
 
