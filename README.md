@@ -1,36 +1,45 @@
-# Dependencies
-* Node [https://nodejs.org/en/download/](https://nodejs.org/en/download/)
-* Git [https://git-scm.com/download/mac](https://git-scm.com/download/mac)
-* Production account [http://content.amplience.net/](http://content.amplience.net/)
+# Dynamic Content Extension - Default Selector
 
-# Running Extension
-1. `git clone git@bitbucket.org:amplience/dc-uiex-hello-world.git` to clone this repo
-2. `chmod u+x start.sh` to enable execution of start script
+A very common feature request from our customers is to be able to set default values in the content type schema. This extension is designed to enable this for our customers with minimal setup and development needed.
+
+# Getting Started
+
+### Depdencendies
+
+* Node https://nodejs.org/en/download/
+* Git https://git-scm.com/download/mac
+* Account on Dynamic Content http://content.amplience.net/
+
+### Running the Extension
+
+1. `git clone https://github.com/joffredi/amplience-default-selector.git` to clone this repository
+2. `chmod u+x start.sh` to enable execution of the start script
 3. `npm i`
 4. `npm run start`
-5. Go to `https://127.0.0.1:1234` and accept cert risk
+5. Go to `https://127.0.0.1:1234` and accept certification risk
 
-# Using Extension in DC
+# Usage
 
-1. Go to [http://content.amplience.net/](http://content.amplience.net/) & Login
-2. Go to Development > Content Type Schemas > Create schema
-3. Give it a unique URI
-4. Choose Content Type under 'Schema will be used for' > Save & Open schema
-5. Use schema below (replacing $id value with your schema id)
-6. Go to Development > Content Types > Register Content Type
-7. Choose your schema ang give it a label
-8. Under Associated repositories select <x> repo
-9. Go to Production > Create content and select your new schema
+To use the extension in content type schemas, log on to http://content.amplience.net/, create a new schema and include the extension. You can also choose to register the extension in Dynamic Content. More information on how to do this can be found in the documentation links below:
 
-You are now using a UI Extension. Try updating the placeholder text in `index.html` and see it update in real time. 
+#### Creating Content Type Schemas
+https://docs.amplience.net/integration/schemaeditor.html
 
-## Example schema to use
+#### Registering and Using Extensions
+https://docs.amplience.net/development/registeringextensions.html
+
+To configure your default value for a content type schema field, use the keyword "params" in your schema. The supported property types are "enum" and "text".
+
+
+## Examples
+
+### Content Type Schema Using a Text Value
 ```
 {
 	"$schema": "http://json-schema.org/draft-07/schema#",
 	"$id": "{{your-schema-id-here}}",
 
-	"title": "Hello World",
+	"title": "Default Text Value",
 	"description": "Description",
 
 	"allOf": [
@@ -41,14 +50,59 @@ You are now using a UI Extension. Try updating the placeholder text in `index.ht
 	
 	"type": "object",
 	"properties": {
-		"helloWorld": {
-			"title": "UI Extension",
+		"defaultTextValue": {
+			"title": "Default Text Value Extension",
 			"type": "string",
 			"ui:extension": {
 				"url": "https://localhost:1234/",
 				"height": 100
+				"params": {
+    				"type": "text",
+    				"default": "This is a default value",
+    					
+    
+               }
 			}
 		}
 	}
+}
+```
+
+### Content Type Schema Using an Enum Value
+```
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "{{your-schema-id-here}}",
+
+    "title": "Default Enum Value",
+    "description": "Description",
+
+    "allOf": [
+        {
+            "$ref": "http://bigcontent.io/cms/schema/v1/core#/definitions/content"
+        }
+    ],
+
+    "type": "object",
+    "properties": {
+        "defaultEnumValue": {
+            "title": "Default Enum Value Extension",
+            "type": "string",
+            "ui:extension": {
+                "url": "https://127.0.0.1:1234/",
+                "height": 100,
+                "params": {
+                    "type": "enum",
+                    "default": "3",
+                    "enum": [
+                        ["1", "Option 1"],
+                        ["2", "Option 2"],
+                        ["3", "Option 3"],
+                        ["4", "Option 4"]
+                    ],
+                }
+            }
+        },
+    }
 }
 ```
