@@ -1,4 +1,13 @@
 <!DOCTYPE html>
+<style>
+.hidden {
+  display: none;
+}
+.form {
+  margin-bottom: 10px;
+}
+
+</style>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -12,7 +21,13 @@
   </head>
   <body>
     <h2 id="error">Not connected to DC Application</h2>
-    <input id="field" type="text" placeholder="Hello World"></input>
+
+    <input id="textField" type="text" placeholder="Text 1" class="form"></input>
+
+    <select id="enumField" class="form">
+    </select>
+
+
     <script src="./index.ts"></script>
     <link rel="stylesheet" href="./scss/main.scss" />
   </body>
