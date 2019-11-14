@@ -7,20 +7,44 @@ import {
 
 (async() => {
     try {
-        var sdk = await init < string > (),
-            value = await sdk.field.getValue(),
-            paramType = sdk.params.instance.type,
-            enumArray = sdk.params.instance.enum || "",
-            defaultValue = sdk.params.instance.default || "",
-            existingForm = sdk.form.getValue();
+        var sdk = await init < string > ();
+        console.log('fetching value');
+        var value = await sdk.field.getValue(),
+            paramType = await sdk.params.instance.type,
+            enumArray = await sdk.params.instance.enum || "",
+            defaultValue = await sdk.params.instance.default || "",
+            existingForm;
+
+        try {
+            existingForm = await sdk.form.getValue();
+        } catch (e) {
+            console.log(e);
+        }
 
         const textField = $('#textField');
         const enumField = $('#enumField');
+        const imageField: HTMLButtonElement = $('#imageField');
+        const removeImageField: HTMLButtonElement = $('#removeImageField');
+        const img: HTMLImageElement = $('#image');
 
         switch (paramType) {
+            case "image":
+
+                enumField.classList.add("hidden");
+                textField.classList.add("hidden");
+                sdk.frame.setHeight();
+
+                if(defaultValue) {
+                  img.onload = () => {sdk.frame.setHeight()};
+                  img.src = defaultValue  + "?w=400";
+                }
+
+                break;
             case "text":
 
                 enumField.classList.add("hidden");
+                imageField.classList.add("hidden");
+                sdk.frame.setHeight();
 
                 if (value !== undefined) {
                     textField.value = value;
@@ -32,6 +56,8 @@ import {
             case "enum":
 
                 textField.classList.add("hidden");
+                imageField.classList.add("hidden");
+                sdk.frame.setHeight();
 
                 enumArray.forEach(function(item) {
                     var option = document.createElement("option");
@@ -64,10 +90,26 @@ import {
             }
         };
 
-        textField.on('keyup', _ => setContent(textField.value));
-        enumField.on('change', _ => setContent(enumField.value));
+        imageField.on('click',async (e) => {
+          const i = await sdk.mediaLink.getImage();
+          img.onload = () => {sdk.frame.setHeight()};
+          img.src= '//' + sdk.stagingEnvironment + '/i/' + i.endpoint + '/' + i.name +'?w=400';
+          removeImageField.classList.remove("hidden");
+          setContent(img.src);
+       });
+
+       removeImageField.on('click',async (e) => {
+         img.src= defaultValue + "?w=400";
+         sdk.frame.setHeight();
+         removeImageField.classList.add("hidden");
+         setContent(defaultValue);
+      })
+
+       textField.on('keyup', _ => setContent(textField.value));
+       enumField.on('change', _ => setContent(enumField.value));
 
     } catch (e) {
+        console.error(e);
         const error: HTMLHeadingElement = $('#error');
         error.classList.add('show');
     }
