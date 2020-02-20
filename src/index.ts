@@ -12,13 +12,11 @@ import {
             paramType = sdk.params.instance.type,
             enumArray = sdk.params.instance.enum || "",
             defaultValue = sdk.params.instance.default || "",
-			
             existingForm = sdk.form.getValue();
 
         const textField = $('#textField');
         const enumField = $('#enumField');
-		const titleField = $('#headingTitle');
-		
+
         switch (paramType) {
             case "text":
 
@@ -34,7 +32,7 @@ import {
             case "enum":
 
                 textField.classList.add("hidden");
-				
+
                 enumArray.forEach(function(item) {
                     var option = document.createElement("option");
                     option.text = item[1];
