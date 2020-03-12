@@ -2,5 +2,5 @@
 
 set -e
 
-"$(npm bin)/tsc" --noEmit --watch &
-"$(npm bin)/parcel" ./src/index.html --https
+"node_modules/.bin/tsc" --noEmit --watch
+#"node_modules/.bin/parcel" ./dist/index.html
