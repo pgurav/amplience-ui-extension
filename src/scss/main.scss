@@ -1,9 +1,27 @@
-input {
-  margin: 0px;
+body {
+	&.ui-extension-field {
+		margin: 0;
+		color: grey;
+	    font-size: 12px;
+	    font-family: roboto,sans-serif;
+	    .form {
+			margin: 5px 0 5px 0;
+		}
+		input, select {
+			width: 100%;
+			border: 2px solid #d1d1d1;
+			border-radius: .4rem;
+			box-shadow: none;
+			height: 40px;
+			padding: .6rem 0.5rem;
+			box-sizing: border-box;
+		}
+		#error {
+			display: none;
+			&.show {
+				display: block;
+			}
+		}
+	}
 }
-#error {
-  display: none;
-  &.show {
-    display: block;
-  }
-}
+
