@@ -11,25 +11,37 @@ import {
             value = await sdk.field.getValue(),
             paramType = sdk.params.instance.type,
             enumArray = sdk.params.instance.enum || "",
+            headingTextValue = sdk.params.instance.heading,
+            descriptionTextValue = sdk.params.instance.description,
             defaultValue = sdk.params.instance.default || "",
             existingForm = sdk.form.getValue();
 
+            console.log("headingTextValue" + headingTextValue);
+
         const textField = $('#textField');
         const enumField = $('#enumField');
+        const headingText = $('#headingText');
+        const descriptionText = $('#descriptionText');
 
         switch (paramType) {
             case "text":
 
+                headingText.innerHTML = headingTextValue;
+                descriptionText.innerHTML = descriptionTextValue;
+
                 enumField.classList.add("hidden");
 
-                if (value !== undefined) {
-                    textField.value = value;
+                if (defaultValue !== undefined) {
+                    textField.value = defaultValue;
                 } else {
                     textField.value = sdk.params.instance.default;
                 }
 
                 break;
             case "enum":
+
+                headingText.innerHTML = headingTextValue;
+                descriptionText.innerHTML = descriptionTextValue;
 
                 textField.classList.add("hidden");
 
@@ -55,6 +67,29 @@ import {
                 }
 
                 break;
+            case "date":
+                
+                headingText.innerHTML = headingTextValue;
+                descriptionText.innerHTML = descriptionTextValue;
+
+                enumField.classList.add("hidden");
+                
+                var today = new Date();
+                var dd = today.getDate();
+
+                var mm = today.getMonth()+1; 
+                var yyyy = today.getFullYear();
+                if(dd<10) 
+                {
+                    dd='0'+dd;
+                } 
+
+                if(mm<10) 
+                {
+                    mm='0'+mm;
+                } 
+                today = mm+'-'+dd+'-'+yyyy;
+                textField.value = today;
         }
 
         const setContent = async value => {
