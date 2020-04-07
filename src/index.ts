@@ -5,19 +5,50 @@ import {
     $
 } from './bling';
 
+interface defaultParam {    
+    instance: {   
+        default: any;
+        heading: any;
+        description: any;   
+        type: any;  
+        enum: any;  
+    };    
+    installation: {}; 
+}
+
 (async() => {
     try {
-        var sdk = await init < string > (),
-            value = await sdk.field.getValue(),
+        var sdk = await init < string,defaultParam > ();
+
+    } catch (e) {
+        const error: HTMLHeadingElement = $('#error');
+        error.classList.add('show');
+    }
+
+            var value = await sdk.field.getValue(),
             paramType = sdk.params.instance.type,
             enumArray = sdk.params.instance.enum || "",
             headingTextValue = sdk.params.instance.heading,
             descriptionTextValue = sdk.params.instance.description,
             defaultValue = sdk.params.instance.default || "",
-            existingForm = sdk.form.getValue();
+            existingForm = {};
 
-            console.log("headingTextValue" + headingTextValue);
+            try {
 
+                existingForm = await sdk.form.getValue();
+
+            } catch (e) {
+
+            }
+
+        const setContent = async value => { 
+            try {   
+                await sdk.field.setValue(value);    
+            } catch (e) {   
+                console.log(e); 
+            }   
+        };
+    
         const textField = $('#textField');
         const enumField = $('#enumField');
         const headingText = $('#headingText');
@@ -31,15 +62,17 @@ import {
 
                 enumField.classList.add("hidden");
 
-                if (defaultValue !== undefined) {
-                    textField.value = defaultValue;
+                if (value !== undefined) {
+                    textField.value = value;
                 } else {
                     textField.value = sdk.params.instance.default;
+                    setContent(sdk.params.instance.default);
                 }
 
                 break;
-            case "enum":
 
+            case "enum":
+                
                 headingText.innerHTML = headingTextValue;
                 descriptionText.innerHTML = descriptionTextValue;
 
@@ -64,9 +97,12 @@ import {
                 }
                 if (value !== undefined) {
                     enumField.value = value;
+                } else { 
+                    setContent(sdk.params.instance.default);    
                 }
 
                 break;
+
             case "date":
                 
                 headingText.innerHTML = headingTextValue;
@@ -75,36 +111,18 @@ import {
                 enumField.classList.add("hidden");
                 
                 var today = new Date();
-                var dd = today.getDate();
+                var dd = new Date(String(today.getDate()).padStart(2, '0'));
+                var mm = new Date(String(today.getMonth() + 1).padStart(2, '0')); //January is 0!
+                var yyyy = new Date(today.getFullYear());
 
-                var mm = today.getMonth()+1; 
-                var yyyy = today.getFullYear();
-                if(dd<10) 
-                {
-                    dd='0'+dd;
-                } 
+                today = new Date(mm + '/' + dd + '/' + yyyy);
 
-                if(mm<10) 
-                {
-                    mm='0'+mm;
-                } 
-                today = mm+'-'+dd+'-'+yyyy;
                 textField.value = today;
+				break; 
         }
-
-        const setContent = async value => {
-            try {
-                await sdk.field.setValue(value);
-            } catch (e) {
-                console.log(e);
-            }
-        };
 
         textField.on('keyup', _ => setContent(textField.value));
         enumField.on('change', _ => setContent(enumField.value));
 
-    } catch (e) {
-        const error: HTMLHeadingElement = $('#error');
-        error.classList.add('show');
-    }
+
 })();

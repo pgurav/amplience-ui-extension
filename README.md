@@ -17,36 +17,7 @@
 3. Give it a unique URI
 4. Choose Content Type under 'Schema will be used for' > Save & Open schema
 5. Use schema below (replacing $id value with your schema id)
-6. Go to Development > Content Types > Register Content Type{
-  "type": "string",
-  "ui:extension": {
-    "name": "ui-extension",
-    "params": {
-      "type": "enum",
-      "heading": "Choose Headline Font",
-      "description": "Select font from given options",
-      "default": "proximanva-extrabold",
-      "enum": [
-        [
-          "proximanova-regular",
-          "Proximanova Regular"
-        ],
-        [
-          "proximanva-extrabold",
-          "Proximanova Extrabold"
-        ],
-        [
-          "barley-script",
-          "Barley Script"
-        ],
-        [
-          "playfair-display",
-          "Playfair Display"
-        ]
-      ]
-    }
-  }
-}
+6. Go to Development > Content Types > Register Content Type
 7. Choose your schema ang give it a label
 8. Under Associated repositories select <x> repo
 9. Go to Production > Create content and select your new schema
@@ -56,33 +27,28 @@ You are now using a UI Extension. Try updating the placeholder text in `index.ht
 ## Example schema to use
 ```
 {
-  "type": "string",
-  "ui:extension": {
-    "name": "ariat-extension",
-    "params": {
-      "type": "enum",
-      "heading": "Choose Headline Font",
-      "description": "Select font from given options",
-      "default": "proximanva-extrabold",
-      "enum": [
-        [
-          "proximanova-regular",
-          "Proximanova Regular"
-        ],
-        [
-          "proximanva-extrabold",
-          "Proximanova Extrabold"
-        ],
-        [
-          "barley-script",
-          "Barley Script"
-        ],
-        [
-          "playfair-display",
-          "Playfair Display"
-        ]
-      ]
-    }
-  }
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"$id": "{{your-schema-id-here}}",
+
+	"title": "Hello World",
+	"description": "Description",
+
+	"allOf": [
+		{
+			"$ref": "http://bigcontent.io/cms/schema/v1/core#/definitions/content"
+		}
+	],
+	
+	"type": "object",
+	"properties": {
+		"helloWorld": {
+			"title": "UI Extension",
+			"type": "string",
+			"ui:extension": {
+				"url": "https://localhost:1234/",
+				"height": 100
+			}
+		}
+	}
 }
 ```

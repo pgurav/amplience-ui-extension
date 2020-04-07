@@ -4,19 +4,18 @@
   "description": "A starter project",
   "main": "index.html",
   "scripts": {
-    "build": "parcel build --public-url '.' ./src/index.html",
+    "build": "$(npm bin)/parcel build --public-url '.' ./src/index.html",
     "start": "./start.sh"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    
+    "parcel-bundler": "^1.12.4",
     "sass": "^1.23.0",
     "typescript": "^3.6.4"
   },
   "dependencies": {
-    "parcel-bundler": "^1.12.4",
     "@types/node": "^12.11.1",
-    "dc-extensions-sdk": "^1.0.1"
+    "dc-extensions-sdk": "1.0.3"
   }
 }
